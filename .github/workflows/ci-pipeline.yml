@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - run: pip install flake8
-      - run: flake8 . --max-line-length=120 --extend-ignore=E501,W503,W291,W293,E302,F401,E128,W292,E265,E402
+      - run: flake8 . --max-line-length=120 --extend-ignore=E501,W503
 
   test:
     runs-on: ubuntu-latest
@@ -58,7 +58,7 @@ jobs:
           unzip sakila.zip
           mysql -h 127.0.0.1 -uroot -padmin < sakila-db/sakila-schema.sql
           mysql -h 127.0.0.1 -uroot -padmin < sakila-db/sakila-data.sql
-      - run: PYTHONPATH=. pytest tests/ -v
+      - run: pytest tests/ -v
 
   build:
     runs-on: ubuntu-latest
