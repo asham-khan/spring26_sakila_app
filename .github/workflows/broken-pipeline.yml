@@ -1,3 +1,4 @@
+cat > .github/workflows/broken-pipeline.yml << 'YAML'
 name: Broken CI Pipeline
 
 on:
@@ -36,3 +37,4 @@ jobs:
     steps:
       - name: Deploy
         run: echo Deploying...
+YAML
