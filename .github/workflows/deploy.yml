@@ -1,9 +1,10 @@
+rm .github/workflows/deploy.yml
+cat > .github/workflows/deploy.yml << 'EOF'
 name: Deploy
 
 on:
   push:
     branches: [main]
-    
 
 jobs:
   deploy-staging:
@@ -12,14 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to staging
-        run: |
-          echo "Deploying to staging..."
-          echo "IMAGE: sakila-app:${{ github.sha }}"
+        run: echo "Deploying to staging sakila-app:${{ github.sha }}"
       - name: Write job summary
         run: |
           echo "## Staging Deployment Summary" >> $GITHUB_STEP_SUMMARY
           echo "- Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Branch: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
           echo "- Status: SUCCESS" >> $GITHUB_STEP_SUMMARY
       - name: Notify
         run: echo "Slack notification: Deployment to staging successful"
@@ -40,3 +38,4 @@ jobs:
           body: "Production deployment from commit ${{ github.sha }}"
       - name: Notify
         run: echo "Slack notification: Deployment to production successful"
+EOF
