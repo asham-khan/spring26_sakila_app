@@ -1,5 +1,3 @@
-rm .github/workflows/deploy.yml
-cat > .github/workflows/deploy.yml << 'EOF'
 name: Deploy
 
 on:
@@ -13,14 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to staging
-        run: echo "Deploying to staging sakila-app:${{ github.sha }}"
+        run: echo "Deploying to staging"
       - name: Write job summary
         run: |
           echo "## Staging Deployment Summary" >> $GITHUB_STEP_SUMMARY
-          echo "- Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Status: SUCCESS" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit sha" >> $GITHUB_STEP_SUMMARY
+          echo "- Status SUCCESS" >> $GITHUB_STEP_SUMMARY
       - name: Notify
-        run: echo "Slack notification: Deployment to staging successful"
+        run: echo "Slack notification Deployment to staging successful"
 
   deploy-production:
     runs-on: ubuntu-latest
@@ -29,13 +27,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to production
-        run: echo "Deploying sakila-app:${{ github.sha }} to production"
+        run: echo "Deploying to production"
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ github.run_number }}
-          name: Release ${{ github.run_number }}
-          body: "Production deployment from commit ${{ github.sha }}"
+          tag_name: v1
+          name: Release 1
+          body: "Production deployment"
       - name: Notify
-        run: echo "Slack notification: Deployment to production successful"
-EOF
+        run: echo "Slack notification Deployment to production successful"
